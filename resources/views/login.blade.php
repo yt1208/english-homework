@@ -11,11 +11,22 @@
     <div class="wrapper">
         <div class="container">
             <h1>Login</h1>
-            <form class="form">
-                <input type="student_id" name="student_id" placeholder="student_id">
-                <input type="password" name="password" placeholder="password">
-                <button type="'submit" id="login-button">Login</button>
-            </form>
+        <form class="form" action="{{ route('login') }}" method="POST">
+          @if ($errors->any())
+              <div class="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                       <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+        </div>
+          @endif
+          @csrf
+          <input type="student_id" name="student_id" placeholder="student_id">
+          <input type="password" name="password" placeholder="password">
+          <button type="'submit" id="login-button">Login</button>
+    </form>
+          
         </div>
 
         <ul class="bg-bubbles">
