@@ -14,7 +14,6 @@ class HomeworkController extends Controller
     {
     
     $user = Auth::user();
-    $users = User::where('student_id', $user->student_id)->get();
     $subjects = Subject::orderBy('name')->get();
     $homeworks = Homework::where('user_id', $user->id)
     ->orderBy('title')
@@ -22,7 +21,6 @@ class HomeworkController extends Controller
     ->get();
 
     return view('homework_list', [
-        'users' => $users,
         'subjects' => $subjects,
         'homeworks' => $homeworks,
 
