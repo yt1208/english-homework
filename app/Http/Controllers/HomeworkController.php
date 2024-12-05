@@ -20,7 +20,7 @@ class HomeworkController extends Controller
     ->orderBy('deadline')
     ->get();
 
-    return view('homework_list', [
+    return view('homework.index', [
         'subjects' => $subjects,
         'homeworks' => $homeworks,
 
