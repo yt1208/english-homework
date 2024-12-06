@@ -17,8 +17,8 @@ class AuthController extends Controller
     
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/about');
-            // return redirect()->intended('about');
+            return redirect('/homeworks');
+            // return redirect()->intended('homeworks');
         }
     
         return back()->withErrors([
