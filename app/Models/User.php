@@ -47,4 +47,8 @@ class User extends Authenticatable
     }
 
     protected $guarded = ['id'];
+
+    public function homeworks() {
+        return $this->hasMany(Homework::class);
+    }
 }
