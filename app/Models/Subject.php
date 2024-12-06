@@ -8,6 +8,6 @@ class Subject extends Model {
     protected $guarded = ['id'];
 
     public function homework() {
-        return $this->hasOne(Homework::class);
+        return $this->hasMany(Homework::class);
     }
 }

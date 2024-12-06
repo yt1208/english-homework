@@ -9,6 +9,6 @@ class Homework extends Model {
     protected $table = 'homeworks';
 
     public function subject() {
-        return $this->hasOne(Subject::class);
+        return $this->belongsTo(Subject::class);
     }
 }
