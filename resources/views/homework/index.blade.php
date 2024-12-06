@@ -9,13 +9,13 @@
             <th>期限</th>
             <th colspan="2">操作</th>
         </tr>
-        @foreach($subjects as $subject)
+        @foreach($homeworks as $homework)
             @if($subject->homeworks->isNotEmpty())
                 @foreach($subject->homeworks as $homework)
                     <tr>
-                        <td>{{ $subject->subject_name }}</td>
-                        <td>{{ $homework->homework_tittle }}</td>
-                        <td>{{ $homework->homework_deadline }}</td>
+                        <td>{{ $homework->subject->name }}</td>
+                        <td>{{ $homework->title }}</td>
+                        <td>{{ $homework->deadline }}</td>
                         <td><a href="/edit-page/{{ $homework->id }}">編集</a></td>
                         <td><a href="/delete-page/{{ $homework->id }}">削除</a></td>
                     </tr>
