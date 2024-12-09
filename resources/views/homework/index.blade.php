@@ -9,9 +9,8 @@
             <th>期限</th>
             <th colspan="2">操作</th>
         </tr>
-        @foreach($homeworks as $homework)
-            @if($subject->homeworks->isNotEmpty())
-                @foreach($subject->homeworks as $homework)
+            @if($homeworks->isNotEmpty())
+                @foreach($homeworks as $homework)
                     <tr>
                         <td>{{ $homework->subject->name }}</td>
                         <td>{{ $homework->title }}</td>
@@ -22,10 +21,8 @@
                 @endforeach
             @else
                 <tr>
-                    <td>{{ $subject->subject_name }}</td>
-                    <td colspan="4">宿題がありません</td>
+                    <td colspan="5">宿題がありません</td>
                 </tr>
             @endif
-        @endforeach
     </table>
 </div>
