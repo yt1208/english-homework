@@ -1,7 +1,7 @@
 <h1>Homework List</h1>
 <div>
     <h2>宿題の一覧</h2>
-    <a href="/create-page">宿題を追加</a>
+    <a href="{{ route('homeworks.create') }}">宿題を追加</a>
     <table border="1">
         <tr>
             <th>科目</th>

@@ -25,12 +25,12 @@ class HomeworkController extends Controller
    
     }
 
-    public function createPage()
+    public function create()
     {
-        return view('homework.homework_create');
+        return view('homework.create');
     }
     
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $subject = Subject::firstOrCreate(['name' => $request->name]);
         $homework = new Homework();
