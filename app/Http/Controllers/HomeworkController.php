@@ -69,6 +69,26 @@ class HomeworkController extends Controller
        
         return redirect('/homeworks')->with('success', '宿題が修正されました！');
     }
+    
+    public function destroyPage($id)
+    {
+        $homework = Homework::find($id);
+        return view('homework.destroy', [
+            "homework" => $homework
+        ]);
+    }
+    
+
+    public function destroy($id)
+    {
+        $homework = Homework::find($id);
+    
+        if ($homework) {
+            $homework->delete();
+        }
+    
+        return redirect('/homeworks')->with('success', '宿題を削除しました。');
+    }
 
 }
 
