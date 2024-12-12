@@ -87,7 +87,7 @@ class HomeworkController extends Controller
             $homework->delete();
         }
     
-        return redirect('/homeworks')->with('success', '宿題を削除しました。');
+        return redirect('/homeworks')->with('success', '宿題を完了しました。');
     }
 
 }
