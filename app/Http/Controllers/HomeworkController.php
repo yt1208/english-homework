@@ -27,19 +27,48 @@ class HomeworkController extends Controller
 
     public function create()
     {
-        return view('homework.create');
+        $subjects = Subject::all();
+        return view('homework.create', [
+            'subjects' => $subjects ,
+
+        ]);
+        
     }
     
     public function store(Request $request)
     {
-        $subject = Subject::firstOrCreate(['name' => $request->name]);
         $homework = new Homework();
         $homework->title = $request->title;
         $homework->deadline = $request->deadline;
         $homework->user_id = Auth::id();
-        $homework->subject()->associate($subject);
+        $homework->subject_id = $request->subject_id;
         $homework->save();
  
         return redirect('/homeworks')->with('success', '宿題が作成されました！');
     }
+
+    public function edit(Homework $homework)
+    {
+        $subjects = Subject::all();
+    
+        return view('homework.edit', [
+            'subjects' => $subjects,
+            'homework' => $homework,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+
+    {
+        $homework = Homework::findOrFail($id); 
+        $homework->update([
+            'title' => $request->title,
+            'deadline' => $request->deadline,
+            'subject_id' => $request->subject_id,
+        ]);
+       
+        return redirect('/homeworks')->with('success', '宿題が修正されました！');
+    }
+
 }
+

@@ -15,7 +15,7 @@
                         <td>{{ $homework->subject->name }}</td>
                         <td>{{ $homework->title }}</td>
                         <td>{{ $homework->deadline }}</td>
-                        <td><a href="/edit-page/{{ $homework->id }}">編集</a></td>
+                        <td><a href="{{ route('homeworks.edit', ['homework' => $homework->id]) }}">編集</a></td>
                         <td><a href="/delete-page/{{ $homework->id }}">削除</a></td>
                     </tr>
                 @endforeach
