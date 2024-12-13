@@ -37,12 +37,12 @@ class HomeworkController extends Controller
     
     public function store(Request $request)
     {
-        $homework = new Homework();
-        $homework->title = $request->title;
-        $homework->deadline = $request->deadline;
-        $homework->user_id = Auth::id();
-        $homework->subject_id = $request->subject_id;
-        $homework->save();
+        $homework = Homework::create([
+        $homework->title => $request->title,
+        $homework->deadline => $request->deadline,
+        $homework->user_id => Auth::id(),
+        $homework->subject_id = $request->subject_id,
+        ]);
  
         return redirect('/homeworks')->with('success', '宿題が作成されました！');
     }
@@ -57,10 +57,9 @@ class HomeworkController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Homework $homework)
 
     {
-        $homework = Homework::findOrFail($id); 
         $homework->update([
             'title' => $request->title,
             'deadline' => $request->deadline,
