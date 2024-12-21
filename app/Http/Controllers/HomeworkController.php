@@ -37,6 +37,12 @@ class HomeworkController extends Controller
     
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|string|max:100',
+            'deadline' => 'required|date',
+            'subject_id' => 'required|exists:subjects,id',
+        ]);
+
         $homework = Homework::create([
         $homework->title => $request->title,
         $homework->deadline => $request->deadline,
