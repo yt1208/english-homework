@@ -1,8 +1,20 @@
-<h1>ToDo List</h1>                                                                                                 
+@extends('layouts.app') <!-- レイアウトを継承 -->
+
+@section('title', 'Homework List') <!-- タイトル部分 -->
+
+@section('content') <!-- コンテンツ部分 -->
+<h1> Homework List</h1>                                                                                                 
 <div>
-    <h2>タスクを追加</h2>
+    <h2>宿題の追加</h2>
     <form method="POST" action="{{ route('homeworks.store') }}">
         @csrf
+        @if ($errors->any())
+            <ul>
+            @foreach ($errors->all() as $error)
+               <li style="color:red">{{$error}}</li>
+            @endforeach
+            </ul>
+        @endif
         <p>
             科目：  <select name="subject_id">
             @foreach($subjects as $subject)
@@ -20,3 +32,4 @@
     </form>
     <a href="/homeworks">戻る</a>
 </div>
+@endsection

@@ -1,3 +1,10 @@
+@extends('layouts.app') <!-- レイアウトを継承 -->
+
+@section('title', 'Homework List') <!-- タイトル部分 -->
+
+@section('content') <!-- コンテンツ部分 -->
+
+<h1 class="text-center">Homework List</h1>
 <h1>Homework List</h1>
 <div>
     <h2>宿題の一覧</h2>
@@ -26,3 +33,4 @@
             @endif
     </table>
 </div>
+@endsection

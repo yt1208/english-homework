@@ -1,3 +1,8 @@
+@extends('layouts.app') <!-- レイアウトを継承 -->
+
+@section('title', 'Homework List') <!-- タイトル部分 -->
+
+@section('content') <!-- コンテンツ部分 -->
 <h1>Homework List</h1>                                                                                                 
 <div>
     <h2>宿題を完了する</h2>
@@ -17,3 +22,4 @@
     </form>
     <a href="/homeworks">戻る</a>
 </div>
+@endsection
