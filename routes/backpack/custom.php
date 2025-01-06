@@ -14,6 +14,7 @@ Route::group([
     'middleware' => ['web', 'admin'],
 ], function () {
     Route::crud('admin', 'AdminCrudController');
+    Route::crud('user', 'UserCrudController');
 });
 
 /**

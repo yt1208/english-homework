@@ -1,0 +1,42 @@
+version: '3'
+services:
+  eh-nginx:
+    container_name: "eh-nginx"
+    build:
+      context: ./docker/nginx
+    depends_on:
+      - eh-app
+    ports:
+      - 80:80
+    volumes:
+      - ./:/src
+
+  eh-app:
+    container_name: "eh-app"
+    build:
+      context: ./docker/php
+    depends_on:
+      - eh-mysql
+    volumes:
+      - ./:/src
+      - /src/node_modules
+      - /src/vendor
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+
+  eh-mysql:
+    image: mysql:8.0.37
+    command: --max_allowed_packet=32505856
+    container_name: "eh-mysql"
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=eh
+    ports:
+      - 3306:3306
+
+  eh-redis:
+    image: redis:alpine
+    container_name: "eh-redis"
+    ports:
+      - 16379:6379
