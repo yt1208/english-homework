@@ -44,10 +44,10 @@ class HomeworkController extends Controller
         ]);
 
         $homework = Homework::create([
-        $homework->title => $request->title,
-        $homework->deadline => $request->deadline,
-        $homework->user_id => Auth::id(),
-        $homework->subject_id = $request->subject_id,
+            'title' => $request->title,
+            'deadline' => $request->deadline,
+            'user_id' => Auth::id(),
+            'subject_id' => $request->subject_id,
         ]);
  
         return redirect('/homeworks')->with('success', '宿題が作成されました！');
