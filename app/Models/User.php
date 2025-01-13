@@ -53,4 +53,8 @@ class User extends Authenticatable
     public function homeworks() {
         return $this->hasMany(Homework::class);
     }
+
+    public function vocabularies(){
+        return $this->hasMany(Vocabulary::class);
+    }
 }
