@@ -20,7 +20,7 @@ class UnitController extends Controller
         return view('units.show', compact('unit'));
     }
 
-    public function test($slug)
+    public function grammerChatGPT($slug)
     {
     $unit = Unit::where('slug', $slug)->firstOrFail();
 

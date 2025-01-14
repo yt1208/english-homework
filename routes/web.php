@@ -29,7 +29,7 @@ Route::get('/homeworks/{id}/destroy', [HomeworkController::class, 'destroyPage']
 
 Route::resource('units', UnitController::class);
 
-Route::get('units/{slug}/test', [UnitController::class, 'test'])->name('units.test');
+Route::get('units/{slug}/grammerChatGPT', [UnitController::class, 'grammerChatGPT'])->name('units.grammerChatGPT');
 
 Route::resource('vocabularies', VocabularyController::class, ['except'=>['show']]);
 
