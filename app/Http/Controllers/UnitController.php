@@ -24,7 +24,7 @@ class UnitController extends Controller
     {
     $unit = Unit::where('slug', $slug)->firstOrFail();
 
-    return view('test.index', compact('unit'));
+    return view('grammar_chatgpt.index', compact('unit'));
     }
 
 }
