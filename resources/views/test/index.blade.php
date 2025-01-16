@@ -7,7 +7,7 @@
     <p>ここに{{ $unit->name }}に関するテストを表示します。</p>
     
     <!-- ここにテスト内容や問題を追加する -->
-    <form method="post" action="{{ route('units.test', $unit->slug) }}">
+    <form method="post" action="{{ route('units.grammerChatGPT', $unit->slug) }}">
         @csrf
         <div>
             <label>問題 1: 例題</label><br>
