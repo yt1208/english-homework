@@ -48,5 +48,59 @@ class GrammarChatGPTController extends Controller
         }
     }
 
+        /**
+     * AIを使って文法問題を生成する
+     *
+     * @param string $topic 学習トピック
+     * @return array
+     */
+    private function generateQuestions($topic)
+    {
+        $apiKey = env('OPENAI_API_KEY');
+        $prompt = "次のトピックについて文法の4択問題を5問生成してください。各問題には4つの選択肢と1つの正しい答えを含め、JSON形式で出力してください。トピック: $topic";
 
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $apiKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://api.openai.com/v1/completions', [
+            'model' => 'gpt-3.5-turbo',
+            'prompt' => $prompt,
+            'max_tokens' => 1000,
+        ]);
+
+        if ($response->successful()) {
+            return json_decode($response->body(), true)['choices'][0]['text'];
+        } else {
+            return [];
+        }
+    }
+
+        /**
+     * AIを使って解説を生成する
+     *
+     * @param string $question 質問文
+     * @param string $correctAnswer 正しい答え
+     * @return string
+     */
+
+     private function generateExplanation($question, $correctAnswer)
+     {
+         $apiKey = env('OPENAI_API_KEY');
+         $prompt = "次の文法問題に対する正しい答えが '$correctAnswer' である理由を説明してください。問題: $question";
+ 
+         $response = Http::withHeaders([
+             'Authorization' => 'Bearer ' . $apiKey,
+             'Content-Type' => 'application/json',
+         ])->post('https://api.openai.com/v1/completions', [
+             'model' => 'gpt-3.5-turbo',
+             'prompt' => $prompt,
+             'max_tokens' => 500,
+         ]);
+ 
+         if ($response->successful()) {
+             return $response->json()['choices'][0]['text'];
+         } else {
+             return "解説の生成に失敗しました。";
+         }
+     }
 }

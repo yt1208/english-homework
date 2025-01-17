@@ -20,11 +20,11 @@ class UnitController extends Controller
         return view('units.show', compact('unit'));
     }
 
-    public function grammerChatGPT($slug)
-    {
-    $unit = Unit::where('slug', $slug)->firstOrFail();
+    // public function grammerChatGPT($slug)
+    // {
+    // $unit = Unit::where('slug', $slug)->firstOrFail();
 
-    return view('grammar_chatgpt.index', compact('unit'));
-    }
+    // return view('grammar_chatgpt.index', compact('unit'));
+    // }
 
 }
