@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\VocabularyController;
+use App\Http\Controllers\GrammarChatGPTController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,9 +31,13 @@ Route::get('/homeworks/{id}/destroy', [HomeworkController::class, 'destroyPage']
 
 Route::resource('units', UnitController::class);
 
-Route::get('units/{slug}/grammerChatGPT', [UnitController::class, 'grammerChatGPT'])->name('units.grammerChatGPT');
-
 Route::resource('vocabularies', VocabularyController::class, ['except'=>['show']]);
+
+Route::get('/units/{slug}/grammarChatGPT', [GrammarChatGPTController::class, 'index'])->name('units.grammarChatGPT');
+
+Route::post('/check-answer', [GrammarChatGPTController::class, 'checkAnswer'])->name('check-answer');
+
+
 
 
 

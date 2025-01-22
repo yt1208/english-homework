@@ -12,6 +12,7 @@
         "backpack/theme-tabler": "^1.2",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
+        "openai-php/client": "^0.10.3",
         "openai/openai": "dev-main"
     },
     "require-dev": {
@@ -71,6 +72,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
