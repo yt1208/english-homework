@@ -4,103 +4,84 @@ namespace App\Http\Controllers;
 
 use App\Models\Unit;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Session;
+use OpenAI;
 
 class GrammarChatGPTController extends Controller
 {
-        /**
-     * 文法テストの開始ページ
-     *
-     * @param string $slug ユニットのスラッグ
-     * @return \Illuminate\View\View
-     */
+    const MAX_QUESTIONS = 5;
+
     public function index($slug)
     {
-        
         $unit = Unit::where('slug', $slug)->firstOrFail();
-        $questions = $this->generateQuestions($unit->name);
+        $question = Session::get('current_question', '');
+        $questionNumber = Session::get('question_number', 1);
+        $conversation = Session::get('conversation', []);
 
-        return view('grammar_chatgpt.index', compact('unit', 'questions'));
+        return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'conversation'));
     }
 
-        /**
-     * ユーザーの回答をチェックし、結果を返す
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function checkAnswer(Request $request)
+    public function post(Request $request, $userId)
     {
-        $question = $request->input('question');         
-        $userAnswer = $request->input('answer');         
-        $correctAnswer = $request->input('correct_answer'); 
+        $userAnswer = $request->input('answer');
+        $correctAnswer = $request->input('correct_answer');
+        $question = $request->input('question');
+        $slug = $request->input('slug');
+        $conversation = Session::get('conversation', []);
+        $questionNumber = Session::get('question_number', 1);
+        $conversation[] = "Q{$questionNumber}: {$question}";
+        $conversation[] = "User Answer: {$userAnswer}";
 
-        if ($userAnswer === $correctAnswer) {
-            return response()->json(['correct' => true]);
-        } else {
-            $explanation = $this->generateExplanation($question, $correctAnswer);
-
-            return response()->json([
-                'correct' => false,
-                'explanation' => $explanation,
-            ]);
+    if ($userAnswer === $correctAnswer) {
+        
+        if ($questionNumber >= self::MAX_QUESTIONS) {
+            Session::put('is_test_complete', true);
+            Session::forget('current_question');
+            return redirect()->route('units.index')->with('success', 'テストが終了しました。お疲れさまでした！');
         }
-    }
 
-        /**
-     * AIを使って文法問題を生成する
-     *
-     * @param string $topic 学習トピック
-     * @return array
-     */
-    private function generateQuestions($topic)
-    {
-        $apiKey = env('OPENAI_API_KEY');
-        $prompt = "次のトピックについて文法の4択問題を5問生成してください。各問題には4つの選択肢と1つの正しい答えを含め、JSON形式で出力してください。トピック: $topic";
-
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiKey,
-            'Content-Type' => 'application/json',
-        ])->post('https://api.openai.com/v1/completions', [
+        $apiKey = getenv('OPENAI_API_KEY');
+        $client = OpenAI::client($apiKey);
+        $messageContent = "ユーザーは「{$slug}」について学習しています。次の{$slug}に関する問題を出してください。";
+        $response = $client->chat()->create([
             'model' => 'gpt-3.5-turbo',
-            'prompt' => $prompt,
-            'max_tokens' => 1000,
+            'messages' => [
+                ['role' => 'system', 'content' => 'あなたは文法テストを作成するAIです。'],
+                ['role' => 'user', 'content' => $messageContent], 
+            ],
+            'max_tokens' => 300,
         ]);
 
-        if ($response->successful()) {
-            return json_decode($response->body(), true)['choices'][0]['text'];
-        } else {
-            return [];
-        }
+        $content = $response['choices'][0]['message']['content'];
+        $conversation[] = "Next Question: {$content}";
+        Session::put('conversation', $conversation);
+
+          return response()->json([
+            'correct' => true,
+            'next_question' => $content, 
+        ]);
+    } else {
+        $apiKey = getenv('OPENAI_API_KEY');
+        $client = OpenAI::client($apiKey);
+        $messageContent = "以下の質問に関する解説を生成してください。\n質問: {$question}\n正解: {$correctAnswer}\nユーザーの回答: {$userAnswer}";
+        $response = $client->chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'system', 'content' => 'あなたは文法解説を提供するAIです。'],
+                ['role' => 'user', 'content' => $messageContent],
+            ],
+            'max_tokens' => 300,
+        ]);
+
+        $explanation = $response['choices'][0]['message']['content'];
+        $conversation[] = "Explanation: {$explanation}";
+        Session::put('conversation', $conversation);
+
+        return response()->json([
+            'correct' => false,
+            'explanation' => $explanation,
+            'next_question_button' => true, 
+        ]);
     }
-
-        /**
-     * AIを使って解説を生成する
-     *
-     * @param string $question 質問文
-     * @param string $correctAnswer 正しい答え
-     * @return string
-     */
-
-     private function generateExplanation($question, $correctAnswer)
-     {
-         $apiKey = env('OPENAI_API_KEY');
-         $prompt = "次の文法問題に対する正しい答えが '$correctAnswer' である理由を説明してください。問題: $question";
- 
-         $response = Http::withHeaders([
-             'Authorization' => 'Bearer ' . $apiKey,
-             'Content-Type' => 'application/json',
-         ])->post('https://api.openai.com/v1/completions', [
-             'model' => 'gpt-3.5-turbo',
-             'prompt' => $prompt,
-             'max_tokens' => 500,
-         ]);
- 
-         if ($response->successful()) {
-             return $response->json()['choices'][0]['text'];
-         } else {
-             return "解説の生成に失敗しました。";
-         }
-     }
+}
 }
