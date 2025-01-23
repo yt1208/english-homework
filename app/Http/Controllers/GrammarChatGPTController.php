@@ -14,6 +14,26 @@ class GrammarChatGPTController extends Controller
     public function index($slug)
     {
         $unit = Unit::where('slug', $slug)->firstOrFail();
+        
+        if (!Session::has('current_question')) {
+            $apiKey = getenv('OPENAI_API_KEY');
+            $client = OpenAI::client($apiKey);
+            $messageContent = "ユーザーは「{$slug}」について学習しています。次の{$slug}に関する問題を出してください。";
+            $response = $client->chat()->create([
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [
+                    ['role' => 'system', 'content' => 'あなたは文法テストを作成するAIです。'],
+                    ['role' => 'user', 'content' => $messageContent],
+                ],
+                'max_tokens' => 300,
+            ]);
+    
+            $content = $response['choices'][0]['message']['content'];
+            Session::put('current_question', $content);
+            Session::put('question_number', 1);
+            Session::put('conversation', []);
+        }
+        
         $question = Session::get('current_question', '');
         $questionNumber = Session::get('question_number', 1);
         $conversation = Session::get('conversation', []);

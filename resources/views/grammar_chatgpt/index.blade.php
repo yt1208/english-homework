@@ -1,129 +1,59 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $unit->name }} - 文法テスト</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        .options label {
-            display: block;
-            margin: 5px 0;
-        }
-        .result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .explanation {
-            margin-top: 10px;
-            color: #555;
-        }
-    </style>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
     <h1>{{ $unit->name }} - 文法テスト</h1>
 
-    <div id="quiz-container">
-        <div class="question">
-            <p id="question-text"></p>
+    {{-- テスト終了時の表示 --}}
+    @if (Session::has('is_test_complete'))
+        <div class="alert alert-success">
+            <p>テストが終了しました！お疲れさまでした。</p>
         </div>
-        <form id="answer-form">
-            <div class="options" id="options-container"></div>
-            <button type="submit">回答する</button>
-        </form>
-        <div class="result" id="result-container"></div>
-        <div class="explanation" id="explanation-container"></div>
-    </div>
+        <a href="{{ route('units.index') }}" class="btn btn-primary">単元一覧に戻る</a>
+        @php
+            Session::forget('is_test_complete'); // セッションフラグをクリア
+        @endphp
+    @else
+        {{-- 現在の問題を表示 --}}
+        @if (!empty($question))
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h4>問題 {{ $questionNumber }}/{{ \App\Http\Controllers\GrammarChatGPTController::MAX_QUESTIONS }}</h4>
+                    <p>{{ $question }}</p>
 
-    <script>
-        const questions = @json($questions);
-        let currentQuestionIndex = 0;
+                    {{-- 解答フォーム --}}
+                    <form id="answer-form" method="POST" action="{{ route('grammar.post', ['slug' => $unit->slug, 'userId' => auth()->id()]) }}">
+                        @csrf
+                        <input type="hidden" name="question" value="{{ $question }}">
+                        <input type="hidden" name="slug" value="{{ $unit->slug }}">
+                        <div class="form-group">
+                            <label for="answer">回答:</label>
+                            <input type="text" name="answer" id="answer" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-success mt-3">送信</button>
+                    </form>
+                </div>
+            </div>
+        @endif
 
-        // 次の質問を読み込む
-        function loadQuestion() {
-            const question = questions[currentQuestionIndex];
-            document.getElementById('question-text').innerText = `問題 ${currentQuestionIndex + 1}: ${question.question}`;
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
+        {{-- 解説の表示 --}}
+        @if (!empty($conversation))
+            <div class="conversation-log mt-4">
+                <h5>テスト履歴</h5>
+                <ul class="list-group">
+                    @foreach ($conversation as $entry)
+                        <li class="list-group-item">{{ $entry }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-            question.options.forEach((option, index) => {
-                const label = document.createElement('label');
-                const input = document.createElement('input');
-                input.type = 'radio';
-                input.name = 'answer';
-                input.value = option;
-                label.appendChild(input);
-                label.appendChild(document.createTextNode(` ${option}`));
-                optionsContainer.appendChild(label);
-                optionsContainer.appendChild(document.createElement('br'));
-            });
-
-            // 結果や解説をリセット
-            document.getElementById('result-container').innerText = '';
-            document.getElementById('explanation-container').innerText = '';
-        }
-
-        // 回答フォームの送信イベントを処理
-        document.getElementById('answer-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(e.target);
-            const userAnswer = formData.get('answer');
-
-            if (!userAnswer) {
-                alert('回答を選択してください！');
-                return;
-            }
-
-            const question = questions[currentQuestionIndex];
-            const response = await fetch('{{ route("check-answer") }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-                body: JSON.stringify({
-                    question: question.question,
-                    answer: userAnswer,
-                    correct_answer: question.answer,
-                }),
-            });
-
-            const result = await response.json();
-
-            // 結果を表示
-            const resultContainer = document.getElementById('result-container');
-            if (result.correct) {
-                resultContainer.innerText = '正解です！ 🎉';
-                resultContainer.style.color = 'green';
-            } else {
-                resultContainer.innerText = '不正解です。 😢';
-                resultContainer.style.color = 'red';
-                // 解説を表示
-                document.getElementById('explanation-container').innerText = `解説: ${result.explanation}`;
-            }
-
-            // 次の質問へ進む
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                setTimeout(loadQuestion, 2000); // 2秒後に次の問題を表示
-            } else {
-                setTimeout(() => {
-                    alert('テストが終了しました！お疲れさまでした。');
-                    document.getElementById('quiz-container').innerHTML = '<h2>すべての問題が終了しました！</h2>';
-                }, 2000);
-            }
-        });
-
-        // 初回の質問を読み込む
-        loadQuestion();
-    </script>
-</body>
-</html>
+        {{-- 次の問題ボタン --}}
+        @if (Session::has('conversation') && last(Session::get('conversation')) === 'Next Question:')
+            <form method="GET" action="{{ route('grammar.index', ['slug' => $unit->slug]) }}">
+                <button type="submit" class="btn btn-primary mt-3">次の問題へ進む</button>
+            </form>
+        @endif
+    @endif
+</div>
+@endsection

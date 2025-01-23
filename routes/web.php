@@ -33,9 +33,9 @@ Route::resource('units', UnitController::class);
 
 Route::resource('vocabularies', VocabularyController::class, ['except'=>['show']]);
 
-Route::get('/units/{slug}/grammarChatGPT', [GrammarChatGPTController::class, 'index'])->name('units.grammarChatGPT');
+Route::get('/units/{slug}/grammarChatGPT', [GrammarChatGPTController::class, 'index'])->name('grammar.index');
 
-Route::post('/check-answer', [GrammarChatGPTController::class, 'checkAnswer'])->name('check-answer');
+Route::post('/units/{slug}/grammarChatGPT/post/{userId}', [GrammarChatGPTController::class, 'post'])->name('grammar.post');
 
 
 

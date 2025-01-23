@@ -8,7 +8,7 @@
         @foreach ($units as $unit)
             <li>
                 <a href="{{ url('/units/' . $unit->slug) }}">{{ $unit->name }}</a>
-                <a href="{{ route('units.grammarChatGPT', $unit->slug) }}">テストページ</a>
+                <a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}">テストページ</a>
             </li>
         @endforeach
     </ul>
