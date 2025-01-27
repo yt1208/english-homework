@@ -9,18 +9,16 @@ use OpenAI;
 
 class GrammarChatGPTController extends Controller
 {
-    const MAX_QUESTIONS = 5;
 
     public function index($slug)
     {
         $unit = Unit::where('slug', $slug)->firstOrFail();
         $currentQuestionKey = "current_question_{$slug}";
-        $questionNumberKey = "question_number_{$slug}";
+        $conversation = '';
+        $i = 0;
+        $i = Session::get($i, 1);
         $conversationKey = "conversation_{$slug}";
 
-        if (!Session::has($currentQuestionKey)) {
-            Session::forget($currentQuestionKey);
-        }
             $apiKey = getenv('OPENAI_API_KEY');
             $client = OpenAI::client($apiKey);
             $messageContent = "ユーザーは「{$slug}」について学習しています。「{$slug}」に関する文法問題を1つだけ作成してください。問題文のみを出力してください。解答や解説は含めないでください。";
@@ -35,12 +33,10 @@ class GrammarChatGPTController extends Controller
 
             $content = $response['choices'][0]['message']['content'];
             Session::put($currentQuestionKey, $content);
-            Session::put($questionNumberKey, 1);
-            Session::put($conversationKey, []);
+            Session::put($i, $i+1);
 
         $question = Session::get($currentQuestionKey, '');
-        $questionNumber = Session::get($questionNumberKey, 1);
-        $conversation = Session::get($conversationKey, []);
+        $questionNumber = Session::get($i, 1);
 
         return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'conversation'));
     }
@@ -62,7 +58,7 @@ class GrammarChatGPTController extends Controller
         $conversation[] = "User Answer: {$userAnswer}";
 
         if ($userAnswer === $correctAnswer) {
-            if ($questionNumber >= self::MAX_QUESTIONS) {
+            if ($questionNumber >= config('grammarChatGPT.max_questions')){
                 Session::put('is_test_complete', true);
                 Session::forget($currentQuestionKey);
                 return redirect()->route('units.index')->with('success', 'テストが終了しました。お疲れさまでした！');

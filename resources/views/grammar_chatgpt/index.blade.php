@@ -18,7 +18,7 @@
         @if (!empty($question))
             <div class="card mb-3">
                 <div class="card-body">
-                    <h4>問題 {{ $questionNumber }}/{{ \App\Http\Controllers\GrammarChatGPTController::MAX_QUESTIONS }}</h4>
+                    <h4>問題 {{ $questionNumber ?? 1 }}/{{ config('grammarChatGPT.max_questions') }}</h4>
                     <p>{{ $question }}</p>
 
                     {{-- 解答フォーム --}}
