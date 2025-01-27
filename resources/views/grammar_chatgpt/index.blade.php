@@ -49,7 +49,7 @@
         @endif
 
         {{-- 次の問題ボタン --}}
-        @if (Session::has('conversation') && last(Session::get('conversation')) === 'Next Question:')
+        @if (!Session::has('is_test_complete'))
             <form method="GET" action="{{ route('grammar.index', ['slug' => $unit->slug]) }}">
                 <button type="submit" class="btn btn-primary mt-3">次の問題へ進む</button>
             </form>
@@ -57,3 +57,4 @@
     @endif
 </div>
 @endsection
+
