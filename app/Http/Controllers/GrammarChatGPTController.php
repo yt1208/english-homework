@@ -19,21 +19,9 @@ class GrammarChatGPTController extends Controller
         $i = Session::get($i, 1);
         $conversationKey = "conversation_{$slug}";
 
-            $apiKey = getenv('OPENAI_API_KEY');
-            $client = OpenAI::client($apiKey);
-            $messageContent = "ユーザーは「{$slug}」について学習しています。「{$slug}」に関する文法問題を1つだけ作成してください。問題文のみを出力してください。解答や解説は含めないでください。";
-            $response = $client->chat()->create([
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'あなたは文法テストを作成するAIです。'],
-                    ['role' => 'user', 'content' => $messageContent],
-                ],
-                'max_tokens' => 300,
-            ]);
-
-            $content = $response['choices'][0]['message']['content'];
-            Session::put($currentQuestionKey, $content);
-            Session::put($i, $i+1);
+        $content = $this->generateGrammarQuestion($slug);
+        Session::put($currentQuestionKey, $content);
+        Session::put($i, $i + 1);
 
         $question = Session::get($currentQuestionKey, '');
         $questionNumber = Session::get($i, 1);
@@ -64,19 +52,7 @@ class GrammarChatGPTController extends Controller
                 return redirect()->route('units.index')->with('success', 'テストが終了しました。お疲れさまでした！');
             }
 
-            $apiKey = getenv('OPENAI_API_KEY');
-            $client = OpenAI::client($apiKey);
-            $messageContent = "ユーザーは「{$slug}」について学習しています。「{$slug}」に関する文法問題を1つだけ作成してください。問題文のみを出力してください。解答や解説は含めないでください。";
-            $response = $client->chat()->create([
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'あなたは文法テストを作成するAIです。'],
-                    ['role' => 'user', 'content' => $messageContent],
-                ],
-                'max_tokens' => 300,
-            ]);
-
-            $content = $response['choices'][0]['message']['content'];
+            $content = $this->generateGrammarQuestion($slug);
             $conversation[] = "Next Question: {$content}";
             Session::put($conversationKey, $conversation);
             Session::put($currentQuestionKey, $content);
@@ -87,7 +63,7 @@ class GrammarChatGPTController extends Controller
         } else {
             $apiKey = getenv('OPENAI_API_KEY');
             $client = OpenAI::client($apiKey);
-            $messageContent = "以下の質問に関する解説を生成してください。\n質問: {$question}\n正解: {$correctAnswer}\nユーザーの回答: {$userAnswer}";
+            $messageContent = "以下の質問に関する解説を小学生でも理解出来るように生成してください。質問の正しい解答も明記する。\n質問: {$question}\n正解: {$correctAnswer}\nユーザーの回答: {$userAnswer}";
             $response = $client->chat()->create([
                 'model' => 'gpt-3.5-turbo',
                 'messages' => [
@@ -100,14 +76,25 @@ class GrammarChatGPTController extends Controller
             $explanation = $response['choices'][0]['message']['content'];
             $conversation[] = "Explanation: {$explanation}";
             Session::put($conversationKey, $conversation);
-
-            return view('grammar_chatgpt.index', [
-                'unit' => Unit::where('slug', $slug)->firstOrFail(),
-                'question' => $question,
-                'questionNumber' => $questionNumber,
-                'conversation' => $conversation,
-                'explanation' => $explanation,
-            ]);
+            $unit = Unit::where('slug', $slug)->firstOrFail();
+            return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'conversation', 'explanation'));
         }
+    }
+
+    private function generateGrammarQuestion($slug)
+    {
+        $apiKey = getenv('OPENAI_API_KEY');
+        $client = OpenAI::client($apiKey);
+        $messageContent = "ユーザーは日本人で、英検５級に向けて「{$slug}」について学習しています。「{$slug}」に関する文法問題を小学生レベルで1つだけ作成してください。問題文は穴埋め形式にする。";
+        $response = $client->chat()->create([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'system', 'content' => 'あなたは文法テストを作成するAIです。'],
+                ['role' => 'user', 'content' => $messageContent],
+            ],
+            'max_tokens' => 300,
+        ]);
+
+        return $response['choices'][0]['message']['content'];
     }
 }
