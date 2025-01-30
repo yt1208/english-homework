@@ -35,7 +35,7 @@ Route::resource('vocabularies', VocabularyController::class, ['except'=>['show']
 
 Route::get('/units/{slug}/grammarChatGPT', [GrammarChatGPTController::class, 'index'])->name('grammar.index');
 
-Route::post('/units/{slug}/grammarChatGPT/post/{userId}', [GrammarChatGPTController::class, 'post'])->name('grammar.post');
+Route::post('/units/{slug}/grammarChatGPT/post', [GrammarChatGPTController::class, 'post'])->name('grammar.post');
 
 
 

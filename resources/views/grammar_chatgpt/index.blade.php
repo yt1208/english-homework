@@ -22,10 +22,10 @@
                     <p>{{ $question }}</p>
 
                     {{-- 解答フォーム --}}
-                    <form id="answer-form" method="POST" action="{{ route('grammar.post', ['slug' => $unit->slug, 'userId' => auth()->id()]) }}">
+                    <form id="answer-form" method="POST" action="{{ route('grammar.post', ['slug' => $unit->slug]) }}">
                         @csrf
                         <input type="hidden" name="question" value="{{ $question }}">
-                        <input type="hidden" name="slug" value="{{ $unit->slug }}">
+                        <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
                         <div class="form-group">
                             <label for="answer">回答:</label>
                             <input type="text" name="answer" id="answer" class="form-control" required>
@@ -37,20 +37,19 @@
         @endif
 
         {{-- 解説の表示 --}}
-        @if (!empty($conversation))
-            <div class="conversation-log mt-4">
-                <h5>テスト履歴</h5>
-                <ul class="list-group">
-                    @foreach ($conversation as $entry)
-                        <li class="list-group-item">{{ $entry }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        @if (!empty($explanation))
+        <div class="conversation-log mt-4">
+            <h5>解説</h5>
+            <ul class="list-group">
+            <li class="list-group-item">{{ $explanation }}</li>
+            </ul>
+        </div>
         @endif
 
         {{-- 次の問題ボタン --}}
         @if (!Session::has('is_test_complete'))
             <form method="GET" action="{{ route('grammar.index', ['slug' => $unit->slug]) }}">
+                <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
                 <button type="submit" class="btn btn-primary mt-3">次の問題へ進む</button>
             </form>
         @endif

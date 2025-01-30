@@ -10,61 +10,38 @@ use OpenAI;
 class GrammarChatGPTController extends Controller
 {
 
-    public function index($slug)
+    public function index(Request $questionNumber,$slug)
     {
         $unit = Unit::where('slug', $slug)->firstOrFail();
         $currentQuestionKey = "current_question_{$slug}";
         $conversation = '';
-        $i = 0;
-        $i = Session::get($i, 1);
         $conversationKey = "conversation_{$slug}";
+        $questionNumber = $questionNumber->input('questionNumber') + 1;
+
 
         $content = $this->generateGrammarQuestion($slug);
         Session::put($currentQuestionKey, $content);
-        Session::put($i, $i + 1);
-
         $question = Session::get($currentQuestionKey, '');
-        $questionNumber = Session::get($i, 1);
 
         return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'conversation'));
     }
 
-    public function post(Request $request, $userId)
+    public function post(Request $request,$slug)
     {
-        $slug = $request->input('slug');
-        $currentQuestionKey = "current_question_{$slug}";
-        $questionNumberKey = "question_number_{$slug}";
-        $conversationKey = "conversation_{$slug}";
-
         $userAnswer = $request->input('answer');
         $correctAnswer = $request->input('correct_answer');
         $question = $request->input('question');
-        $conversation = Session::get($conversationKey, []);
-        $questionNumber = Session::get($questionNumberKey, 1);
+        $questionNumber = $request->input('questionNumber');
 
-        $conversation[] = "Q{$questionNumber}: {$question}";
-        $conversation[] = "User Answer: {$userAnswer}";
+        if ($questionNumber >= config('grammarChatGPT.max_questions')){
+            Session::put('is_test_complete', true);
+            $questionNumber = 1;
+        }
 
-        if ($userAnswer === $correctAnswer) {
-            if ($questionNumber >= config('grammarChatGPT.max_questions')){
-                Session::put('is_test_complete', true);
-                Session::forget($currentQuestionKey);
-                return redirect()->route('units.index')->with('success', 'テストが終了しました。お疲れさまでした！');
-            }
-
-            $content = $this->generateGrammarQuestion($slug);
-            $conversation[] = "Next Question: {$content}";
-            Session::put($conversationKey, $conversation);
-            Session::put($currentQuestionKey, $content);
-            $questionNumber = Session::get($questionNumberKey, 1);
-            Session::put($questionNumberKey, $questionNumber + 1);
-
-            return redirect()->route('grammar.index', ['slug' => $slug]);
-        } else {
-            $apiKey = getenv('OPENAI_API_KEY');
-            $client = OpenAI::client($apiKey);
-            $messageContent = "以下の質問に関する解説を小学生でも理解出来るように生成してください。質問の正しい解答も明記する。\n質問: {$question}\n正解: {$correctAnswer}\nユーザーの回答: {$userAnswer}";
-            $response = $client->chat()->create([
+        $apiKey = getenv('OPENAI_API_KEY');
+        $client = OpenAI::client($apiKey);
+        $messageContent = "以下の質問に関する解説を小学生でも理解出来るように生成してください。質問の正しい解答も明記する。\n質問: {$question}\n正解: {$correctAnswer}\nユーザーの回答: {$userAnswer}";
+        $response = $client->chat()->create([
                 'model' => 'gpt-3.5-turbo',
                 'messages' => [
                     ['role' => 'system', 'content' => 'あなたは文法解説を提供するAIです。'],
@@ -73,12 +50,9 @@ class GrammarChatGPTController extends Controller
                 'max_tokens' => 300,
             ]);
 
-            $explanation = $response['choices'][0]['message']['content'];
-            $conversation[] = "Explanation: {$explanation}";
-            Session::put($conversationKey, $conversation);
-            $unit = Unit::where('slug', $slug)->firstOrFail();
-            return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'conversation', 'explanation'));
-        }
+        $explanation = $response['choices'][0]['message']['content'];
+        $unit = Unit::where('slug', $slug)->firstOrFail();
+            return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'explanation'));
     }
 
     private function generateGrammarQuestion($slug)
