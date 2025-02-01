@@ -16,8 +16,12 @@ class GrammarChatGPTController extends Controller
         $currentQuestionKey = "current_question_{$slug}";
         $conversation = '';
         $conversationKey = "conversation_{$slug}";
-        $questionNumber = $questionNumber->input('questionNumber') + 1;
 
+        if (Session::has('is_test_complete')) {
+            Session::forget([$currentQuestionKey, $conversationKey, 'is_test_complete']);
+        }
+
+        $questionNumber = $questionNumber->input('questionNumber') + 1;
 
         $content = $this->generateGrammarQuestion($slug);
         Session::put($currentQuestionKey, $content);

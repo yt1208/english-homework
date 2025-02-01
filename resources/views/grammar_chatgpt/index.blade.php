@@ -5,17 +5,15 @@
     <h1>{{ $unit->name }} - 文法テスト</h1>
 
     {{-- テスト終了時の表示 --}}
-    @if (Session::has('is_test_complete'))
+    @if (Session::get('is_test_complete') && empty($explanation))
         <div class="alert alert-success">
             <p>テストが終了しました！お疲れさまでした。</p>
         </div>
         <a href="{{ route('units.index') }}" class="btn btn-primary">単元一覧に戻る</a>
-        @php
-            Session::forget('is_test_complete'); // セッションフラグをクリア
-        @endphp
+
     @else
         {{-- 現在の問題を表示 --}}
-        @if (!empty($question))
+        @if (!empty($question) && !Session::has('is_test_complete'))
             <div class="card mb-3">
                 <div class="card-body">
                     <h4>問題 {{ $questionNumber ?? 1 }}/{{ config('grammarChatGPT.max_questions') }}</h4>
@@ -46,8 +44,16 @@
         </div>
         @endif
 
+        {{-- 最後の問題の解説を表示し、終了ボタンを出す --}}
+        @if (Session::has('is_test_complete'))
+            <div class="alert alert-info">
+                <p>これで最後の問題です。お疲れさまでした！</p>
+                <a href="{{ route('units.index') }}" class="btn btn-primary">単元一覧に戻る</a>
+            </div>
+        @endif
+
         {{-- 次の問題ボタン --}}
-        @if (!Session::has('is_test_complete'))
+        @if (!Session::has('is_test_complete') && !empty($question))
             <form method="GET" action="{{ route('grammar.index', ['slug' => $unit->slug]) }}">
                 <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
                 <button type="submit" class="btn btn-primary mt-3">次の問題へ進む</button>
