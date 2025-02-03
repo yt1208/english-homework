@@ -1,8 +1,8 @@
-@extends('layouts.app') <!-- レイアウトを継承 -->
+@extends('layouts.app')
 
-@section('title', 'Homework List') <!-- タイトル部分 -->
+@section('title', 'Homework List')
 
-@section('content') <!-- コンテンツ部分 -->
+@section('content')
 <h1> Homework List</h1>                                                                                                 
 <div>
     <h2>宿題の追加</h2>

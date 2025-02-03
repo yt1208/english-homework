@@ -1,29 +1,81 @@
-<!-- resources/views/layouts/app.blade.php -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Laravel English Grammar')</title> <!-- ページ毎にタイトルを変える -->
-    
-    <!-- BootstrapのCSSを追加 -->
+    <title>@yield('title', 'Laravel English Grammar')</title> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0F0F0F;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        h1 {
+            color: #43C6AC;
+            font-weight: bold;
+        }
+
+        .navbar {
+            background-color: #121212;
+        }
+        .navbar-brand {
+            color: #43C6AC;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .question-number, .question-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .choices li {
+            font-size: 1.2rem;
+            list-style-type: none;
+        }
+
+        .explanation {
+            font-size: 1.2rem;
+            background-color: #222222;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: #43C6AC;
+            border-color: #43C6AC;
+        }
+        .btn-primary:hover {
+            background-color: #2F9E86;
+            border-color: #2F9E86;
+        }
+
+        .card, .list-group-item {
+            background-color: #1C1C1C;
+            border: 1px solid #2E2E2E;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- ナビゲーションバー（任意） -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">English Grammar</a>
         </div>
     </nav>
 
-    <!-- ページのコンテンツがここに挿入されます -->
     <div class="container mt-5">
-        @yield('content') <!-- 各ページのコンテンツを表示する場所 -->
+        @yield('content')
     </div>
 
-    <!-- BootstrapのJSを追加 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
