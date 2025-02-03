@@ -4,6 +4,16 @@
 <div class="container">
     <h1>{{ $unit->name }} - 文法テスト</h1>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {{-- テスト終了時の表示 --}}
     @if (Session::get('is_test_complete') && empty($explanation))
         <div class="alert alert-success">
@@ -26,8 +36,8 @@
                         <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
                         <div class="form-group">
                         <label for="answer">回答:</label>
-                        <input type="text" name="answer" id="answer" class="form-control"
-                        placeholder="1～4の半角数字を入力してください" required>                     
+                        <input type="number" name="answer" id="answer" class="form-control"
+                        placeholder="1～4の半角数字を入力してください" required min="1" max="4">
                         </div>
                         <button type="submit" class="btn btn-success mt-3">回答を送信</button>
                     </form>
