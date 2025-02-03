@@ -25,8 +25,9 @@
                         <input type="hidden" name="question" value="{{ $question }}">
                         <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
                         <div class="form-group">
-                            <label for="answer">回答:</label>
-                            <input type="text" name="answer" id="answer" class="form-control" required>
+                        <label for="answer">回答:</label>
+                        <input type="text" name="answer" id="answer" class="form-control"
+                        placeholder="1～4の半角数字を入力してください" required>                     
                         </div>
                         <button type="submit" class="btn btn-success mt-3">送信</button>
                     </form>

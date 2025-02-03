@@ -32,6 +32,14 @@ class GrammarChatGPTController extends Controller
 
     public function post(Request $request,$slug)
     {
+        $request->validate([
+            'answer' => 'required|integer|between:1,4',
+        ], [
+            'answer.required' => '回答は必須です。',
+            'answer.integer' => '回答は1～4の数字で入力してください。',
+            'answer.between' => '回答は1～4の中から選択してください。',
+        ]);
+        
         $userAnswer = $request->input('answer');
         $correctAnswer = $request->input('correct_answer');
         $question = $request->input('question');
