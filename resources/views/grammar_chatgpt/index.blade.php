@@ -29,7 +29,7 @@
                         <input type="text" name="answer" id="answer" class="form-control"
                         placeholder="1～4の半角数字を入力してください" required>                     
                         </div>
-                        <button type="submit" class="btn btn-success mt-3">送信</button>
+                        <button type="submit" class="btn btn-success mt-3">回答を送信</button>
                     </form>
                 </div>
             </div>
