@@ -15,7 +15,7 @@
     @endif
 
     {{-- テスト終了時の表示 --}}
-    @if (Session::get('is_test_complete') && empty($explanation))
+    @if (Session::get('is_test_complete'))
         <div class="alert alert-success">
             <p>テストが終了しました！お疲れさまでした。</p>
         </div>
