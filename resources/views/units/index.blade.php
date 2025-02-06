@@ -18,8 +18,14 @@
             @foreach ($units as $unit)
             <tr>
                 <td>{{ $unit->name }}</td>
-                <td><a href="{{ url('/units/' . $unit->slug) }}" class="btn btn-info text-white">学習する</a></td>
-                <td><a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}" class="btn text-white" style="background-color: #FFD700;">テストする</a></td>
+                <td>
+                <a href="{{ url('/units/' . $unit->slug) }}" class="btn text-white" style="background-color: #68a5da;">
+                     学習開始
+                </td>
+                <td>
+                <a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}" class="btn text-white" style="background-color: #fedc5e;">
+                     テスト開始               
+                </td>
             </tr>
             @endforeach
         </tbody>
