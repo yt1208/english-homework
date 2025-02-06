@@ -37,9 +37,12 @@
                         <div class="form-group">
                         <label for="answer">回答:</label>
                         <input type="number" name="answer" id="answer" class="form-control"
-                        placeholder="1～4の半角数字を入力してください" required min="1" max="4">
-                        </div>
-                        <button type="submit" class="btn btn-success mt-3">回答を送信</button>
+                        placeholder="1～4の半角数字を入力してください" required min="1" max="4"
+                        style="max-width: 300px; text-align: center;">
+                        <button type="submit" class="btn text-white mt-3" 
+                         style="background-color: #F4C542; border-color: #F4C542; max-width: 150px; width: 100%;">
+                        回答を送信
+                        </button>
                     </form>
                 </div>
             </div>

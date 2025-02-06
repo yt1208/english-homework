@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4 text-start">英検５級の文法</h1>
+    <h1 class="mb-4 text-start">英検５級の文法トレーニング</h1>
 
     <table class="table table-dark table-striped table-hover text-center">
         <thead>
