@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -20,6 +21,7 @@
 
         .navbar {
             background-color: #121212;
+            padding: 10px 20px;
         }
         .navbar-brand {
             color: #43C6AC;
@@ -29,6 +31,35 @@
         .container {
             max-width: 900px;
         }
+
+        .nav-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none !important;
+        }
+
+        .btn-homework {
+            background: #4A90E2;
+            color: white !important;
+            border: none;
+        }
+        .btn-homework:hover {
+            background: #357ABD;
+        }
+
+        .btn-vocab {
+            background: #F4C542;
+            color: white !important;
+            border: none;
+        }
+        .btn-vocab:hover {
+            background: #E0AC2B;
+}
 
         .question-number, .question-text {
             font-size: 1.5rem;
@@ -74,20 +105,21 @@
             <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
                 <ul class="navbar-nav d-flex align-items-center">
                     <li class="nav-item me-2">
-                        <a class="btn btn-info text-white px-4 py-2" href="{{ route('homeworks.index') }}">宿題の一覧</a>
+                        <a class="nav-button btn-homework" href="{{ route('homeworks.index') }}">宿題の一覧</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn text-white px-4 py-2" style="background-color: #FFD700;" href="{{ route('vocabularies.index') }}">My単語帳</a>
+                        <a class="nav-button btn-vocab" href="{{ route('vocabularies.index') }}">My単語帳</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-        <div class="container mt-5">
-            @yield('content')
-        </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container mt-5">
+        @yield('content')
+    </div>
 
-    </body>
-    </html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -14,7 +14,7 @@
     <h1 class="mb-4 text-start">My英単語帳</h1>
 
     <div class="mb-3">
-        <a href="{{ route('vocabularies.create') }}" class="btn btn-primary">英単語を追加する</a>
+        <a href="{{ route('vocabularies.create') }}" class="btn text-white" style="background-color: #4A90E2">英単語を追加する</a>
     </div>
 
     <table class="table table-dark table-striped table-hover text-center">
@@ -32,7 +32,7 @@
                         <td>{{ $vocabulary->word }}</td>
                         <td>{{ $vocabulary->meaning }}</td>
                         <td>
-                            <a href="{{ route('vocabularies.edit', $vocabulary->id) }}" class="btn btn-info text-white">編集</a>
+                            <a href="{{ route('vocabularies.edit', $vocabulary->id) }}" class="btn text-white" style="background-color: #F4C542">編集</a>
                             <form action="{{ route('vocabularies.destroy', $vocabulary->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
                                 @csrf
                                 @method('DELETE')
