@@ -4,33 +4,45 @@
 
 @section('content')
 
-<h1 class="text-center">Homework List</h1>
-<h1>Homework List</h1>
-<div>
-    <h2>宿題の一覧</h2>
-    <a href="{{ route('homeworks.create') }}">宿題を追加</a>
-    <table border="1">
-        <tr>
-            <th>科目</th>
-            <th>宿題の内容</th>
-            <th>期限</th>
-            <th colspan="2">操作</th>
-        </tr>
+<div class="container">
+    <h1 class="text-center">Homework List</h1>
+
+    <div class="mb-3 text-end">
+        <a href="{{ route('homeworks.create') }}" class="btn btn-info text-white">新規作成</a>
+    </div>
+
+    <table class="table table-dark table-striped table-hover text-center">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Content</th>
+                <th>Deadline</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
             @if($homeworks->isNotEmpty())
                 @foreach($homeworks as $homework)
                     <tr>
                         <td>{{ $homework->subject->name }}</td>
                         <td>{{ $homework->title }}</td>
                         <td>{{ $homework->deadline }}</td>
-                        <td><a href="{{ route('homeworks.edit', ['homework' => $homework->id]) }}">編集</a></td>
-                        <td><a href="{{ route('homeworks.destroyPage', ['id' => $homework->id]) }}">完了</a></td>
+                        <td>
+                            <a href="{{ route('homeworks.edit', ['homework' => $homework->id]) }}" class="btn btn-warning text-white">編集</a>
+                        </td>
+                        <td>
+                            <a href="{{ route('homeworks.destroyPage', ['id' => $homework->id]) }}" class="btn btn-danger text-white">削除</a>
+                        </td>
                     </tr>
                 @endforeach
             @else
                 <tr>
-                    <td colspan="5">宿題がありません</td>
+                    <td colspan="5" class="text-center">宿題がありません</td>
                 </tr>
             @endif
+        </tbody>
     </table>
 </div>
+
 @endsection

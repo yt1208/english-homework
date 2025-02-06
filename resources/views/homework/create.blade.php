@@ -1,35 +1,44 @@
 @extends('layouts.app')
 
-@section('title', 'Homework List')
+@section('title', '宿題の新規作成')
 
 @section('content')
-<h1> Homework List</h1>                                                                                                 
-<div>
-    <h2>宿題の追加</h2>
+<div class="container" style="max-width: 500px;">
+    <h1 class="text-center mb-4">宿題の新規作成</h1>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('homeworks.store') }}">
         @csrf
-        @if ($errors->any())
-            <ul>
-            @foreach ($errors->all() as $error)
-               <li style="color:red">{{$error}}</li>
-            @endforeach
-            </ul>
-        @endif
-        <p>
-            科目：  <select name="subject_id">
-            @foreach($subjects as $subject)
-            <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-            @endforeach
+
+        <div class="mb-3">
+            <label for="subject_id" class="form-label">科目</label>
+            <select name="subject_id" id="subject_id" class="form-select" style="max-width: 150px;" required>
+                @foreach($subjects as $subject)
+                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                @endforeach
             </select>
-        </p>
-        <p>
-            宿題の内容：<input type="text" name="title">
-        </p>
-        <p>
-            期限：<input type="text" name="deadline">
-        </p>
-        <input type="submit" name="create" value="追加">
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">宿題の内容</label>
+            <input type="text" name="title" id="title" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="deadline" class="form-label">期限</label>
+            <input type="date" name="deadline" id="deadline" class="form-control" style="max-width: 150px;" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary 150px">作成する</button>
     </form>
-    <a href="/homeworks">戻る</a>
 </div>
 @endsection
