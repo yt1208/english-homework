@@ -27,7 +27,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h4>問題 {{ $questionNumber ?? 1 }}/{{ config('grammarChatGPT.max_questions') }}</h4>
-                    <p>{{ $question }}</p>
+                    <p>{!! nl2br(e($question)) !!}</p>
 
                     {{-- 解答フォーム --}}
                     <form id="answer-form" method="POST" action="{{ route('grammar.post', ['slug' => $unit->slug]) }}">
