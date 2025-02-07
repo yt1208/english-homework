@@ -29,21 +29,21 @@
                     <h4>問題 {{ $questionNumber ?? 1 }}/{{ config('grammarChatGPT.max_questions') }}</h4>
                     <p>{!! nl2br(e($question)) !!}</p>
 
-                    {{-- 解答フォーム --}}
-                    <form id="answer-form" method="POST" action="{{ route('grammar.post', ['slug' => $unit->slug]) }}">
-                        @csrf
-                        <input type="hidden" name="question" value="{{ $question }}">
-                        <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
-                        <div class="form-group">
-                        <label for="answer">回答:</label>
-                        <input type="number" name="answer" id="answer" class="form-control"
-                        placeholder="1～4の半角数字を入力してください" required min="1" max="4"
-                        style="max-width: 300px; text-align: center;">
-                        <button type="submit" class="btn text-white mt-3" 
-                         style="background-color: #F4C542; border-color: #F4C542; max-width: 150px; width: 100%;">
-                        回答を送信
-                        </button>
-                    </form>
+        {{-- 解答フォーム --}}
+         <form id="answer-form" method="POST" action="{{ route('grammar.post', ['slug' => $unit->slug]) }}">
+            @csrf
+            <input type="hidden" name="question" value="{{ $question }}">
+            <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
+            <div class="form-group">
+                 <label for="answer">回答:</label>
+                 <input type="number" name="answer" id="answer" class="form-control"
+                    placeholder="1～4の半角数字を入力してください" required min="1" max="4"
+                    style="max-width: 300px; text-align: center;">
+                <button type="submit" class="btn text-white mt-3" 
+                    style="background-color: #F4C542; border-color: #F4C542; max-width: 150px; width: 100%;">
+                    回答を送信
+                </button>
+         </form>
                 </div>
             </div>
         @endif
