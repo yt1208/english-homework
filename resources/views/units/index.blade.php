@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4 text-start">英検５級の文法トレーニング</h1>
+    <h1 class="mb-4 text-start">英検５級 文法トレーニング</h1>
 
     <table class="table table-dark table-striped table-hover text-center">
         <thead>
@@ -19,11 +19,11 @@
             <tr>
                 <td>{{ $unit->name }}</td>
                 <td>
-                <a href="{{ url('/units/' . $unit->slug) }}" class="btn text-white" style="background-color: #4A90E2;">
+                <a href="{{ url('/units/' . $unit->slug) }}" class="btn text-white" style="background-color: #428ac8;">
                      学習開始
                 </td>
                 <td>
-                <a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}" class="btn text-white" style="background-color: #F4C542;">
+                <a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}" class="btn text-white" style="background-color: #bed457;">
                      テスト開始               
                 </td>
             </tr>
