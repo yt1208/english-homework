@@ -6,18 +6,19 @@ use Illuminate\Http\Request;
 use App\Models\Homework;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\HomeworkRepository;
 
 class HomeworkController extends Controller
 {
+    public function __construct(HomeworkRepository $homeworkRepository)
+    {
+        $this->homework = $homeworkRepository;
+    }
+
     public function index()
     {
-    
         $user = Auth::user();
-        $homeworks = Homework::where('user_id', $user->id)
-        ->orderBy('title')
-        ->orderBy('deadline')
-        ->get();
-
+        $homeworks = $this->homework->getHomeworksByid($user->id);
         return view('homework.index', [
             'homeworks' => $homeworks,
 
