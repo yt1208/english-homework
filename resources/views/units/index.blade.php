@@ -19,12 +19,10 @@
             <tr>
                 <td>{{ $unit->name }}</td>
                 <td>
-                <a href="{{ url('/units/' . $unit->slug) }}" class="btn text-white" style="background-color: #428ac8;">
-                     学習開始
+                <a href="{{ url('/units/' . $unit->slug) }}" class="btn btn-study">学習開始</a>
                 </td>
                 <td>
-                <a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}" class="btn text-white" style="background-color: #bed457;">
-                     テスト開始               
+                <a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}" class="btn btn-test">テスト開始</a>            
                 </td>
             </tr>
             @endforeach

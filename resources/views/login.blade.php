@@ -16,8 +16,8 @@
         </div>
     @endif
 
-    <form class="form mx-auto" action="{{ route('login') }}" method="POST" style="max-width: 400px;">
-        @csrf 
+    <form class="form login-form" action="{{ route('login') }}" method="POST">
+    @csrf 
         <div class="mb-3">
             <label for="student_id" class="form-label">生徒番号</label>
             <input type="text" name="student_id" id="student_id" class="form-control" placeholder="student_id" required>
@@ -26,7 +26,7 @@
             <label for="password" class="form-label">パスワード</label>
             <input type="password" name="password" id="password" class="form-control" placeholder="password" required>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Login</button>
+        <button type="submit" class="btn btn-submit">Login</button>
     </form>
 </div>
 @endsection

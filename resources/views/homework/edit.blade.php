@@ -16,7 +16,7 @@
 
             <div class="mb-3">
                 <label for="subject_id" class="form-label">科目：</label>
-                <select name="subject_id" class="form-control" style="max-width: 60px;" required>
+                <select name="subject_id" class="form-control form-select-small" required>
                     @foreach ($subjects as $subject)
                         <option value="{{ $subject->id }}" {{ old('subject_id', $homework->subject_id) == $subject->id ? 'selected' : '' }}>
                             {{ $subject->name }}
@@ -32,10 +32,10 @@
 
             <div class="mb-3">
                 <label for="deadline" class="form-label">期限：</label>
-                <input type="date" name="deadline" class="form-control" style="max-width: 150px;" value="{{ $homework->deadline }}" required>
+                <input type="date" name="deadline" class="form-control form-input-date" value="{{ $homework->deadline }}" required>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="max-width: 150px;">宿題を更新</button>
+            <button type="submit" class="btn btn-update">宿題を更新</button>
             </form>
     </div>
 </div>

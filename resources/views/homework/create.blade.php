@@ -21,7 +21,7 @@
 
         <div class="mb-3">
             <label for="subject_id" class="form-label">科目</label>
-            <select name="subject_id" id="subject_id" class="form-select" style="max-width: 150px;" required>
+            <select name="subject_id" id="subject_id" class="form-select" required>
                 @foreach($subjects as $subject)
                     <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                 @endforeach
@@ -30,7 +30,7 @@
 
         <div class="mb-3">
             <label for="title" class="form-label">宿題の内容</label>
-            <input type="text" name="title" id="title" class="form-control" required>
+            <input type="text" name="title" id="title" class="form-control-wide form-control" required>
         </div>
 
         <div class="mb-3">
@@ -38,7 +38,7 @@
             <input type="date" name="deadline" id="deadline" class="form-control" style="max-width: 150px;" required>
         </div>
 
-        <button type="submit" class="btn btn-primary 150px">作成する</button>
+        <button type="submit" class="btn btn-submit">作成する</button>
     </form>
 </div>
 @endsection
