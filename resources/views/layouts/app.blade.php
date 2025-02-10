@@ -10,19 +10,15 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('units.index') }}">English Grammar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
-                <ul class="navbar-nav d-flex align-items-center">
-                    <li class="nav-item me-2">
-                        <a class="nav-button btn-homework" href="{{ route('homeworks.index') }}">宿題の一覧</a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white me-3" href="{{ route('homeworks.index') }}">📘 宿題の一覧</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-button btn-vocab" href="{{ route('vocabularies.index') }}">My単語帳</a>
+                        <a class="nav-link text-white" href="{{ route('vocabularies.index') }}">📖 My単語帳</a>
                     </li>
                 </ul>
             </div>
