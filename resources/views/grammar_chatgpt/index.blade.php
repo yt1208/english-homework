@@ -35,11 +35,17 @@
             <input type="hidden" name="question" value="{{ $question }}">
             <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
             <div class="form-group">
-                 <label for="answer">回答:</label>
-                 <input type="number" name="answer" id="answer" class="form-control"
-                    placeholder="1～4の半角数字を入力してください" required min="1" max="4">
-                 </div>
-                 <button type="submit" class="btn btn-answer mt-3">回答を送信</button>
+                 <label for="answer">回答を選択:</label>
+                 <select name="answer" id="answer" class="form-select form-answer" required>
+                 <option value="" selected disabled>選択してください</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-answer mt-3">回答を送信</button>
          </form>
                 </div>
             </div>
