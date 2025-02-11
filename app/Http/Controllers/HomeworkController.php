@@ -18,20 +18,18 @@ class HomeworkController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $homeworks = $this->homework->getHomeworksByid($user->id);
+        $homeworks = $this->homework->getHomeworksById($user->id);
         return view('homework.index', [
             'homeworks' => $homeworks,
-
         ]);
    
     }
 
     public function create()
     {
-        $subjects = Subject::all();
+        $subjects = $this->homework->getAllSubjects();
         return view('homework.create', [
             'subjects' => $subjects ,
-
         ]);
         
     }

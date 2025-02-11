@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Homework;
+use App\Models\Subject;
 
 class HomeworkRepository
 {
-    public function getHomeworksByid(int $user_id)
+    public function getHomeworksById(int $user_id)
     {
         $homeworks = Homework::where('user_id', $user_id)
         ->orderBy('title')
@@ -14,5 +15,10 @@ class HomeworkRepository
         ->get();
         
         return $homeworks;
+    }
+
+    public function getAllSubjects()
+    {
+        return Subject::all();
     }
 }
