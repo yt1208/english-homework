@@ -70,7 +70,7 @@
         @endif
 
         {{-- 次の問題ボタン --}}
-        @if (!Session::has('is_test_complete') && !empty($question))
+        @if (!Session::has('is_test_complete') && !empty($explanation))
             <form method="GET" action="{{ route('grammar.index', ['slug' => $unit->slug]) }}">
                 <input type="hidden" name="questionNumber" value="{{ $questionNumber }}">
                 <button type="submit" class="btn btn-next mt-3">次の問題へ進む</button>
