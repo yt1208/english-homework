@@ -34,6 +34,7 @@ class HomeworkRepository
 
     public function deleteHomework($id)
     {
+        
     $homework = Homework::find($id);
     
     if ($homework) {
