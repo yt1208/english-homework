@@ -42,19 +42,23 @@ class HomeworkController extends Controller
             'subject_id' => 'required|exists:subjects,id',
         ]);
 
-        $homework = Homework::create([
+        $userId = Auth::id();  
+
+        $homework = [
             'title' => $request->title,
             'deadline' => $request->deadline,
-            'user_id' => Auth::id(),
+            'user_id' => $userId,
             'subject_id' => $request->subject_id,
-        ]);
+        ];
+
+        $this->homework->storeHomework($homework);
  
         return redirect('/homeworks')->with('success', '宿題が作成されました！');
     }
 
     public function edit(Homework $homework)
     {
-        $subjects = Subject::all();
+        $subjects = $this->homework->getAllSubjects();
     
         return view('homework.edit', [
             'subjects' => $subjects,
@@ -65,33 +69,33 @@ class HomeworkController extends Controller
     public function update(Request $request, Homework $homework)
 
     {
-        $homework->update([
+        $request->validate([
+            'title' => 'required|string|max:100',
+            'deadline' => 'required|date',
+            'subject_id' => 'required|exists:subjects,id',
+        ]);
+
+        $data = [
             'title' => $request->title,
             'deadline' => $request->deadline,
             'subject_id' => $request->subject_id,
-        ]);
+        ];
+
+        $this->homework->updateHomework($homework, $data);
        
         return redirect('/homeworks')->with('success', '宿題が修正されました！');
-    }
-    
-    public function destroyPage($id)
-    {
-        $homework = Homework::find($id);
-        return view('homework.destroy', [
-            "homework" => $homework
-        ]);
-    }
-    
+    }    
 
     public function destroy($id)
     {
-        $homework = Homework::find($id);
+        $isDeleted = $this->homework->deleteHomework($id);
     
-        if ($homework) {
-            $homework->delete();
+        if ($isDeleted) {
+            return redirect('/homeworks')->with('success', '宿題を削除しました。');
+        } else {
+            return redirect('/homeworks')->with('error', '削除に失敗しました。');
         }
-    
-        return redirect('/homeworks')->with('success', '宿題を完了しました。');
+        
     }
 
 }

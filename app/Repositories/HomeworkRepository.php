@@ -21,4 +21,26 @@ class HomeworkRepository
     {
         return Subject::all();
     }
+
+    public function storeHomework(array $homework)
+    {
+        return Homework::create($homework);
+    }
+
+    public function updateHomework(Homework $homework, array $data)
+    {
+        return $homework->update($data);
+    }
+
+    public function deleteHomework($id)
+    {
+    $homework = Homework::find($id);
+    
+    if ($homework) {
+        return $homework->delete();
+    }
+    
+    return false;
+}
+
 }
