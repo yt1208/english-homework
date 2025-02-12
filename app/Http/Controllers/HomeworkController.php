@@ -51,7 +51,7 @@ class HomeworkController extends Controller
             'subject_id' => $request->subject_id,
         ];
 
-        $this->homework->storeHomework($homework);
+        $this->homework->storeHomework($homeworkData);
  
         return redirect('/homeworks')->with('success', '宿題が作成されました！');
     }
