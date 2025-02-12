@@ -44,7 +44,7 @@ class HomeworkController extends Controller
 
         $userId = Auth::id();  
 
-        $homework = [
+        $homeworkData = [
             'title' => $request->title,
             'deadline' => $request->deadline,
             'user_id' => $userId,
@@ -75,13 +75,13 @@ class HomeworkController extends Controller
             'subject_id' => 'required|exists:subjects,id',
         ]);
 
-        $data = [
+        $updateData = [
             'title' => $request->title,
             'deadline' => $request->deadline,
             'subject_id' => $request->subject_id,
         ];
 
-        $this->homework->updateHomework($homework, $data);
+        $this->homework->updateHomework($homework, $updateData);
        
         return redirect('/homeworks')->with('success', '宿題が修正されました！');
     }    

@@ -22,14 +22,14 @@ class HomeworkRepository
         return Subject::all();
     }
 
-    public function storeHomework(array $homework)
+    public function storeHomework(array $homeworkData)
     {
-        return Homework::create($homework);
+        return Homework::create($homeworkData);
     }
 
-    public function updateHomework(Homework $homework, array $data)
+    public function updateHomework(Homework $homework, array $updateData)
     {
-        return $homework->update($data);
+        return $homework->update($updateData);
     }
 
     public function deleteHomework($id)
