@@ -27,8 +27,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::resource('homeworks', HomeworkController::class, ['except'=>['show']]);
 
-Route::get('/homeworks/{id}/destroy', [HomeworkController::class, 'destroyPage'])->name('homeworks.destroyPage');
-
 Route::resource('units', UnitController::class);
 
 Route::resource('vocabularies', VocabularyController::class, ['except'=>['show']]);

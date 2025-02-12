@@ -213,6 +213,18 @@ h1 {
   background: #E0AC2B;
 }
 
+.btn-delete {
+  max-width: 100px;
+  width: 100%;
+  background: #D9534F;
+  border: none;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #C9302C;
+}
+
 .btn-study {
   background: #428ac8;
   color: white !important;

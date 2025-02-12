@@ -4,6 +4,12 @@
 
 @section('content')
 
+<script>
+    function confirmDelete() {
+        return confirm("本当に削除しますか？");
+    }
+</script>
+
 <div class="container">
     <h1 class="text-center">Homework List</h1>
 
@@ -32,7 +38,11 @@
                             <a href="{{ route('homeworks.edit', ['homework' => $homework->id]) }}" class="btn btn-edit">編集</a>
                         </td>
                         <td>
-                            <a href="{{ route('homeworks.destroyPage', ['id' => $homework->id]) }}" class="btn btn-delete">削除</a>
+                            <form action="{{ route('homeworks.destroy', ['homework' => $homework->id]) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-delete">削除</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
