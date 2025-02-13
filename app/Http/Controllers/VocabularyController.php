@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vocabulary;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\VocabularyRepository;
 
 class VocabularyController extends Controller
 {
+    public function __construct(VocabularyRepository $vocabularyRepository)
+    {
+        $this->vocabulary = $vocabularyRepository;
+    }
+
     public function index()
     {
-        $vocabularies = Auth::user()->vocabularies ?? [];
+        $user = Auth::user();
+        $vocabularies = $this->vocabulary->getVocabulariesById($user->id);
 
         return view('vocabularies.index', [
             'vocabularies' => $vocabularies,
@@ -30,11 +37,15 @@ class VocabularyController extends Controller
             'meaning' => 'required|string|max:100',
         ]);
 
-        $vocabulary = Vocabulary::create([
+        $userId = Auth::id();  
+
+        $vocabularyData = [
             'word' => $request->word,
             'meaning' => $request->meaning,
-            'user_id' => Auth::id(),
-        ]);
+            'user_id' => $userId,
+        ];
+
+        $this->vocabulary->storeVocabulary($vocabularyData);
 
         return redirect()->route('vocabularies.index')->with('success', '英単語を追加しました。');
     }
@@ -54,23 +65,25 @@ class VocabularyController extends Controller
             'meaning' => 'required|string|max:100',
         ]);
        
-        $vocabulary->update([
+        $updateData = [
             'word' => $request->word,
             'meaning' => $request->meaning,
-        ]);
+        ];
+
+        $this->vocabulary->updateVocabulary($vocabulary, $updateData);
        
         return redirect()->route('vocabularies.index')->with('success', '英単語を更新しました。');
     }
 
     public function destroy($id)
     {
-        $vocabulary = Vocabulary::find($id);
-    
-        if ($vocabulary) {
-            $vocabulary->delete();
+        $isDeleted = $this->vocabulary->deleteVocabulary($id);
+
+        if ($isDeleted) {
+            return redirect('/vocabularies')->with('success', '英単語を削除しました。');
+        } else {
+            return redirect('/vocabularies')->with('error', '削除に失敗しました。');
         }
-    
-        return redirect()->route('vocabularies.index');
     }
 
 }
