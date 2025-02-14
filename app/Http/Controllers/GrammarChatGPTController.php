@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Repositories\UnitRepository;
 use OpenAI;
 
 class GrammarChatGPTController extends Controller
 {
+    public function __construct(UnitRepository $unitRepository)
+    {
+        $this->unit = $unitRepository;
+    }
 
     public function index(Request $questionNumber,$slug)
     {
-        $unit = Unit::where('slug', $slug)->firstOrFail();
+        $unit = $this->unit->getUnitBySlug($slug);
         $currentQuestionKey = "current_question_{$slug}";
         $conversation = '';
         $conversationKey = "conversation_{$slug}";
@@ -64,7 +69,7 @@ class GrammarChatGPTController extends Controller
         ]);
 
         $explanation = $response['choices'][0]['message']['content'];
-        $unit = Unit::where('slug', $slug)->firstOrFail();
+        $unit = $this->unit->getUnitBySlug($slug);
             return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'explanation'));
     }
 
