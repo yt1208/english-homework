@@ -77,13 +77,9 @@ class VocabularyController extends Controller
 
     public function destroy($id)
     {
-        $isDeleted = $this->vocabulary->deleteVocabulary($id);
+        $this->vocabulary->deleteVocabulary($id);
 
-        if ($isDeleted) {
-            return redirect('/vocabularies')->with('success', '英単語を削除しました。');
-        } else {
-            return redirect('/vocabularies')->with('error', '削除に失敗しました。');
-        }
+        return redirect('/vocabularies')->with('success', '英単語を削除しました。');
     }
 
 }

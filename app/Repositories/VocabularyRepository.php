@@ -23,14 +23,6 @@ class VocabularyRepository
 
     public function deleteVocabulary($id)
     {
-        
-    $vocabulary = Vocabulary::find($id);
-    
-    if ($vocabulary) {
-        return $vocabulary->delete();
+        return Vocabulary::destroy($id);
     }
-    
-        return false;
-    }
-
 }

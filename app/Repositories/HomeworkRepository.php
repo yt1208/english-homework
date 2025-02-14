@@ -33,15 +33,7 @@ class HomeworkRepository
     }
 
     public function deleteHomework($id)
-    {
-        
-    $homework = Homework::find($id);
-    
-    if ($homework) {
-        return $homework->delete();
+    {    
+        return Homework::destroy($id);
     }
-    
-    return false;
-    }
-
 }

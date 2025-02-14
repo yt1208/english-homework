@@ -88,14 +88,9 @@ class HomeworkController extends Controller
 
     public function destroy($id)
     {
-        $isDeleted = $this->homework->deleteHomework($id);
-    
-        if ($isDeleted) {
-            return redirect('/homeworks')->with('success', '宿題を削除しました。');
-        } else {
-            return redirect('/homeworks')->with('error', '削除に失敗しました。');
-        }
+        $this->homework->deleteHomework($id);
         
+        return redirect('/homeworks')->with('success', '宿題を削除しました。');
     }
 
 }
