@@ -5,14 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Laravel English Grammar')</title> 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     @vite(['resources/css/app.css'])
 </head>
 <body>
 
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
             <a class="navbar-brand" href="{{ route('units.index') }}">English Grammar</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-expand-lg を適用した collapse の show クラスを追加
+            navbar-collapse show" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link text-white me-3" href="{{ route('homeworks.index') }}">📘 宿題の一覧</a>

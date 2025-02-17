@@ -197,9 +197,9 @@ h1 {
 }
 
 .table-dark {
-  background-color: #2C2F33 !important;
-  border-color: #444B52 !important;
-  color: white !important;
+  background-color: #2C2F33;
+  border-color: #444B52;
+  color: white;
 }
 
 .btn-edit {
@@ -215,7 +215,6 @@ h1 {
 
 .btn-delete {
   max-width: 100px;
-  width: 100%;
   background: #D9534F;
   border: none;
   color: white;
@@ -290,4 +289,60 @@ h1 {
   padding: 8px;
   font-size: 16px;
   border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-item {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-link {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+  }
+
+  .table-dark {
+    width: auto;
+    min-width: 100%;
+    overflow-x: scroll;
+  }
+
+  .form-container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .form-control {
+    width: 100%;
+  }
+
+  .btn-submit {
+    width: 100%;
+  }
+
+  .btn {
+    max-width: 300px;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
 }
