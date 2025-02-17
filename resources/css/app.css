@@ -311,9 +311,7 @@ h1 {
   .nav-link {
     padding: 10px;
   }
-}
 
-@media (max-width: 768px) {
   .table-responsive {
     overflow-x: auto;
     display: block;
@@ -345,4 +343,9 @@ h1 {
     padding: 12px;
     font-size: 16px;
   }
+
+  .header-menu {
+    visibility: collapse;
+  }
+
 }
