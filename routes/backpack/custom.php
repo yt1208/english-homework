@@ -13,7 +13,7 @@ Route::group([
     'prefix'     => config('backpack.base.route_prefix', 'admin'),
     'middleware' => ['web', 'admin'],
 ], function () {
-    Route::crud('admin', 'AdminCrudController');
+    // Route::crud('admin', 'AdminCrudController');
     Route::crud('user', 'UserCrudController');
 });
 
