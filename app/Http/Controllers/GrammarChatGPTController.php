@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Repositories\UnitRepository;
 use OpenAI;
+use App\Http\Requests\PostGrammarChatGPTRequest;
 
 class GrammarChatGPTController extends Controller
 {
@@ -35,15 +36,8 @@ class GrammarChatGPTController extends Controller
         return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'conversation'));
     }
 
-    public function post(Request $request,$slug)
+    public function post(PostGrammarChatGPTRequest $request,$slug)
     {
-        $request->validate([
-            'answer' => 'required|in:1,2,3,4',
-        ], [
-            'answer.required' => '回答は必須です。',
-            'answer.in' => '回答は1～4の選択肢から選んでください。',
-        ]);
-        
         $userAnswer = $request->input('answer');
         $correctAnswer = $request->input('correct_answer');
         $question = $request->input('question');
