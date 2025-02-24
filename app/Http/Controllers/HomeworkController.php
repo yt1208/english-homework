@@ -7,6 +7,7 @@ use App\Models\Homework;
 use App\Models\Subject;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\HomeworkRepository;
+use App\Http\Requests\StoreHomeworkRequest;
 
 class HomeworkController extends Controller
 {
@@ -34,14 +35,8 @@ class HomeworkController extends Controller
         
     }
     
-    public function store(Request $request)
+    public function store(StoreHomeworkRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:100',
-            'deadline' => 'required|date',
-            'subject_id' => 'required|exists:subjects,id',
-        ]);
-
         $userId = Auth::id();  
 
         $homeworkData = [
@@ -66,15 +61,8 @@ class HomeworkController extends Controller
         ]);
     }
 
-    public function update(Request $request, Homework $homework)
-
+    public function update(StoreHomeworkRequest $request, Homework $homework)
     {
-        $request->validate([
-            'title' => 'required|string|max:100',
-            'deadline' => 'required|date',
-            'subject_id' => 'required|exists:subjects,id',
-        ]);
-
         $updateData = [
             'title' => $request->title,
             'deadline' => $request->deadline,
