@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Vocabulary;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\VocabularyRepository;
+use App\Http\Requests\StoreVocabularyRequest;
 
 class VocabularyController extends Controller
 {
@@ -30,13 +31,8 @@ class VocabularyController extends Controller
         return view('vocabularies.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreVocabularyRequest $request)
     {
-        $request->validate([
-            'word' => 'required|string|max:100',
-            'meaning' => 'required|string|max:100',
-        ]);
-
         $userId = Auth::id();  
 
         $vocabularyData = [
@@ -57,14 +53,9 @@ class VocabularyController extends Controller
         ]);
     }
 
-    public function update(Request $request, Vocabulary $vocabulary)
+    public function update(StoreVocabularyRequest $request, Vocabulary $vocabulary)
 
-    {
-        $request->validate([
-            'word' => 'required|string|max:100',
-            'meaning' => 'required|string|max:100',
-        ]);
-       
+    {      
         $updateData = [
             'word' => $request->word,
             'meaning' => $request->meaning,
