@@ -42,3 +42,5 @@
 - **OpenAI API**（文法問題と解説の自動生成）
 - **Laravel Backpack**（管理画面）
 - **Bootstrap**（フロントエンド）
+- **Docker**（開発環境）
+- **AWS**（本番環境）
