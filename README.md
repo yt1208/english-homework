@@ -6,8 +6,7 @@
 
 このアプリは、英検5級の文法学習をサポートするためのツールです。ユーザーは、各単元に基づいた学習を行い、学習後にテストを受けて理解度の確認ができます。
 
-![動画デモ](https://ezgif.com/save/ezgif-8de8f40ff411f4.gif)
-
+![動画デモ](https://ezgif.com/save/ezgif-6b7bbd2dd2fbd4.gif)
 
 ## 管理者機能
 
