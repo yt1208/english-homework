@@ -95,10 +95,33 @@ EOT,
     'question-words' => <<<EOT
 疑問詞とは「だれ」「何」「どこ」「いつ」「どのように」など、情報を求める言葉です。
 
-- Who（誰） → Who is your teacher? 「あなたの先生はだれですか。」
-- What（何） → What is your favorite food? 「あなたの好きな食べ物は何ですか。」
-- Where（どこ） → Where do you live? 「あなたはどこに住んでいますか。」
-- When（いつ） → When does Lisa practice the piano? 「リサはいつピアノを練習しますか。」
-- How（どのように） → How do you go to school? 「あなたはどうやって学校へ行きますか。」
+- Who（誰） 
+例：
+Who is your teacher? 「あなたの先生はだれですか。」
+⇨ Mr.Green is. 「グリーン先生です。」
+※ Who is 〜?の疑問文に対しては、人名＋is.の形で答えます。
+
+- What（何） 
+例：
+What is your favorite food? 「あなたの好きな食べ物は何ですか。」
+⇨ My favorite food is such. 「私のお気に入りの食べ物は寿司です。」 
+
+- Where（どこ） 
+例：
+Where do you live? 「あなたはどこに住んでいますか。」
+⇨ I live in Canada.「私はカナダに住んでいます。」 
+
+- When（いつ） 
+例：
+When does Lisa practice the piano? 「リサはいつピアノを練習しますか。」
+⇨ On Wednesdays. 「毎週水曜日です。」
+
+- How（どのように)
+例：
+How do you go to school? 「あなたはどうやって学校へ行きますか。」
+⇨ By bike. 「自転車で行きます。」
+※ by + 乗り物で交通手段を伝えることができます。
+
+Howはその他にも、How much「いくら」,How long 「どのくらい(長さ)」,How many 「いくつ」など色々な表現があります。
 EOT,
 ];
