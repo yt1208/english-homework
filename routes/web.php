@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\VocabularyController;
 use App\Http\Controllers\GrammarChatGPTController;
+use App\Http\Controllers\ChatbotController;
 
 
 Route::get('/', function () {
@@ -34,6 +35,12 @@ Route::resource('vocabularies', VocabularyController::class, ['except'=>['show']
 Route::get('/units/{slug}/grammarChatGPT', [GrammarChatGPTController::class, 'index'])->name('grammar.index');
 
 Route::post('/units/{slug}/grammarChatGPT/post', [GrammarChatGPTController::class, 'post'])->name('grammar.post');
+
+Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot');
+
+Route::post('/chatbot/ask', [ChatbotController::class, 'ask'])->name('ask');
+
+
 
 
 

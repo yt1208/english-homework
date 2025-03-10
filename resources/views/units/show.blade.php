@@ -10,5 +10,6 @@
     <div class="mt-4">
         <a href="{{ route('units.index') }}" class="btn btn-back">単元一覧に戻る</a>
         <a href="{{ route('grammar.index', ['slug' => $unit->slug]) }}" class="btn btn-test">テストする</a>
+        <a href="{{ route('chatbot') }}" class="btn btn-primary ml-3">チャットボットを使う</a>
     </div>
 @endsection
