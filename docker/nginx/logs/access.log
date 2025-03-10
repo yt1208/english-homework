@@ -3486,3 +3486,5 @@
 172.18.0.1 - - [10/Mar/2025:06:04:10 +0000] "GET /units HTTP/1.1" 200 3488 "http://localhost/units/be-verbs" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 172.18.0.1 - - [10/Mar/2025:06:04:11 +0000] "GET /units/progressive-form HTTP/1.1" 200 4841 "http://localhost/units" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 172.18.0.1 - - [10/Mar/2025:06:04:23 +0000] "GET /units HTTP/1.1" 200 3488 "http://localhost/units/progressive-form" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+172.18.0.1 - - [10/Mar/2025:06:05:11 +0000] "GET /units/be-verbs HTTP/1.1" 499 0 "http://localhost/units" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+172.18.0.1 - - [10/Mar/2025:06:05:11 +0000] "GET /units/be-verbs HTTP/1.1" 200 4725 "http://localhost/units" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
