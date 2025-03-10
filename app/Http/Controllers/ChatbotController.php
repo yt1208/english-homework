@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Session;
 
 class ChatbotController extends Controller
 {
-    public function index()
-    {
-        return view('chatbot');
-    }
-
     public function ask(Request $request)
     {
         $apiKey = getenv('OPENAI_API_KEY');

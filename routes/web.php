@@ -36,8 +36,6 @@ Route::get('/units/{slug}/grammarChatGPT', [GrammarChatGPTController::class, 'in
 
 Route::post('/units/{slug}/grammarChatGPT/post', [GrammarChatGPTController::class, 'post'])->name('grammar.post');
 
-Route::get('/chatbot', [ChatbotController::class, 'index'])->name('chatbot');
-
 Route::post('/chatbot/ask', [ChatbotController::class, 'ask'])->name('ask');
 
 
