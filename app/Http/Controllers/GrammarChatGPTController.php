@@ -25,6 +25,8 @@ class GrammarChatGPTController extends Controller
 
         if (Session::has('is_test_complete')) {
             Session::forget([$currentQuestionKey, $conversationKey, 'is_test_complete']);
+
+            return view('grammar_chatgpt.index', compact('unit'));
         }
 
         $questionNumber = $questionNumber->input('questionNumber') + 1;
@@ -64,7 +66,8 @@ class GrammarChatGPTController extends Controller
 
         $explanation = $response['choices'][0]['message']['content'];
         $unit = $this->unit->getUnitBySlug($slug);
-            return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'explanation'));
+        
+        return view('grammar_chatgpt.index', compact('unit', 'question', 'questionNumber', 'explanation'));
     }
 
     private function generateGrammarQuestion($slug)
