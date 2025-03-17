@@ -8,6 +8,20 @@
     function confirmDelete() {
         return confirm("本当に削除しますか？");
     }
+
+    function toggleAllWords() {
+        const words = document.querySelectorAll('.word');
+        words.forEach(word => {
+            word.style.visibility = word.style.visibility === "hidden" ? "visible" : "hidden";
+        });
+    }
+
+    function toggleAllMeanings() {
+        const meanings = document.querySelectorAll('.meaning');
+        meanings.forEach(meaning => {
+            meaning.style.visibility = meaning.style.visibility === "hidden" ? "visible" : "hidden";
+        });
+    }
 </script>
 
 <div class="container">
@@ -15,6 +29,11 @@
 
     <div class="mb-3">
         <a href="{{ route('vocabularies.create') }}" class="btn btn-create">英単語を追加する</a>
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-secondary" onclick="toggleAllWords()">単語を全て隠す/表示する</button>
+        <button class="btn btn-secondary" onclick="toggleAllMeanings()">意味を全て隠す/表示する</button>
     </div>
 
     <table class="table table-dark table-striped table-hover text-center table-vocabulary">
@@ -29,11 +48,11 @@
             @if($vocabularies->isNotEmpty())
                 @foreach ($vocabularies as $vocabulary)
                     <tr>
-                        <td>{{ $vocabulary->word }}</td>
-                        <td>{{ $vocabulary->meaning }}</td>
+                        <td class="word" style="display: table-cell;">{{ $vocabulary->word }}</td>
+                        <td class="meaning" style="display: table-cell;">{{ $vocabulary->meaning }}</td>
                         <td>
-                        <a href="{{ route('vocabularies.edit', $vocabulary->id) }}" class="btn btn-edit">編集</a>
-                        <form action="{{ route('vocabularies.destroy', $vocabulary->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
+                            <a href="{{ route('vocabularies.edit', $vocabulary->id) }}" class="btn btn-edit">編集</a>
+                            <form action="{{ route('vocabularies.destroy', $vocabulary->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete();">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-delete">削除</button>

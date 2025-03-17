@@ -190,6 +190,35 @@ h1 {
   background-color: #2C2F33;
   border-color: #444B52;
   color: white;
+  width: 100%;
+  display: table;
+  table-layout: fixed;
+}
+
+.table-dark .table-row {
+  display: table-row;
+  width: 100%;
+}
+
+.table-dark .hidden {
+  visibility: hidden;
+  opacity: 0;
+  display: table-cell;
+  width: 33%;
+  height: 100%;
+}
+
+.table-dark .word, .table-dark .meaning, .table-dark .operation {
+  display: table-cell;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+  width: 33%;
+}
+
+.table-dark .word, .table-dark .meaning, .table-dark .operation {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .btn-edit {
