@@ -32,8 +32,8 @@
     </div>
 
     <div class="mb-3">
-        <button class="btn btn-secondary" onclick="toggleAllWords()">単語を全て隠す/表示する</button>
-        <button class="btn btn-secondary" onclick="toggleAllMeanings()">意味を全て隠す/表示する</button>
+        <button class="btn btn-secondary" onclick="toggleAllWords()">単語を隠す/表示する</button>
+        <button class="btn btn-secondary" onclick="toggleAllMeanings()">意味を隠す/表示する</button>
     </div>
 
     <table class="table table-dark table-striped table-hover text-center table-vocabulary">

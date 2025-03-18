@@ -221,6 +221,15 @@ h1 {
   padding-right: 10px;
 }
 
+.btn-secondary {
+  background: #bed457;
+  color: white !important;
+  border: none;
+}
+.btn-secondary:hover {
+  background: #9db742;
+}
+
 .btn-edit {
   max-width: 100px;
   background: #F4C542;
