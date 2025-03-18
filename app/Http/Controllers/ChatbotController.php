@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class ChatbotController extends Controller
 {
-    public function ask(Request $request)
+    public function ask(AskChatbotRequest $request)
     {
         $apiKey = getenv('OPENAI_API_KEY');
         $client = OpenAI::client($apiKey);

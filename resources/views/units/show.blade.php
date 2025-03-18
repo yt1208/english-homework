@@ -25,7 +25,12 @@
         </div>
         <div class="chatbot-messages" id="messages"></div>
         <div class="chatbot-input">
-            <input type="text" id="userInput" placeholder="質問...">
+            @if ($errors->has('message'))
+                <div class="alert alert-danger">
+                    {{ $errors->first('message') }}
+                </div>
+            @endif
+            <input type="text" id="userInput" placeholder="質問..." maxlength="150">
             <button id="sendMessage">送信</button>
         </div>
     </div>
