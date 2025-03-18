@@ -14,7 +14,7 @@
 
     <!-- Chatbot button -->
     <div class="chatbot-button">
-        <button id="openChatbot">チャットボットに質問する</button>
+        <button id="openChatbot">{{ $unit->name }}について質問する</button>
     </div>
 
     <!-- Chatbot window -->
