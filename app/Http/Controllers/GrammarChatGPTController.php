@@ -24,7 +24,7 @@ class GrammarChatGPTController extends Controller
         if (Session::has('is_test_complete')) {
             Session::forget([$currentQuestionKey, 'is_test_complete']);
 
-            return view('grammar_chatgpt.index', compact('unit'));
+            return redirect()->route('grammar.index', ['slug' => $slug]);
         }
 
         $questionNumber = $questionNumber->input('questionNumber') + 1;
