@@ -15,4 +15,8 @@ class Unit extends Model
     {
         return 'slug';
     }
+
+    public function grammarQuestions() {
+        return $this->hasMany(GrammarQuestion::class);
+    }
 }
